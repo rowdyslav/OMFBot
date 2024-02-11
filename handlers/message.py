@@ -1,6 +1,6 @@
-from aiogram import Bot
 from aiogram.types import LabeledPrice, Message
 
+from bot import BOT
 from config import PRICES
 from keyboards.products import PRODUCTS_KEYBOARD
 
@@ -8,13 +8,14 @@ products_titles = [x[0] for x in PRODUCTS_KEYBOARD]
 
 
 async def start(message: Message):
-    await message.answer(
-        "Выберите товар и я отправлю вам ссылку для оплаты.",
+    await BOT.send_message(
+        chat_id=message.chat.id,
+        text="Выберите товар и я отправлю вам ссылку для оплаты.",
         reply_markup=PRODUCTS_KEYBOARD,
     )
 
 
-async def some_message(message: Message, bot: Bot):
+async def some_message(message: Message):
     if not message.text in products_titles:
         await message.reply("Извините, но я не знаю как ответить на такое сообщение.")
         return
@@ -22,7 +23,7 @@ async def some_message(message: Message, bot: Bot):
     title = message.text
     user = message.from_user
     assert user != None
-    await bot.send_invoice(
+    await BOT.send_invoice(
         chat_id=user.id,
         title=title,
         description="Описание",
