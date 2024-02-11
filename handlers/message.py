@@ -1,10 +1,13 @@
 from aiogram.types import LabeledPrice, Message
+from icecream import ic
 
+import config
 from bot import BOT
-from config import PRICES
 from keyboards.products import PRODUCTS_KEYBOARD
 
-products_titles = [x[0] for x in PRODUCTS_KEYBOARD]
+products_titles = [
+    button.text for button in [keyboard for _, keyboard in PRODUCTS_KEYBOARD][0][0]
+]
 
 
 async def start(message: Message):
@@ -16,20 +19,22 @@ async def start(message: Message):
 
 
 async def some_message(message: Message):
+    user = message.from_user
+    if not user:
+        return
     if not message.text in products_titles:
         await message.reply("Извините, но я не знаю как ответить на такое сообщение.")
         return
 
     title = message.text
-    user = message.from_user
-    assert user != None
+    assert title
     await BOT.send_invoice(
         chat_id=user.id,
         title=title,
         description="Описание",
         payload=title,
-        provider_token="381764678:TEST:77850",
+        provider_token=config.YOOKASSA_KEY,
         currency="RUB",
-        prices=[LabeledPrice(label="Лейбл", amount=PRICES[title] * 100)],
+        prices=[LabeledPrice(label="Лейбл", amount=config.PRICES[title] * 100)],
         need_name=True,
     )
