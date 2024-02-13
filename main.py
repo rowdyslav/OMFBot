@@ -5,20 +5,19 @@ import sys
 from aiogram import Dispatcher, F
 from aiogram.filters import CommandStart
 
-from bot import BOT
+from core import BOT
 from handlers.message import some_message, start
-from handlers.payment import pre_checkout_query, sucess_payment
+from handlers.payment import pre_checkout_query, success_payment
+
+dp = Dispatcher()
 
 
 async def main() -> None:
-    dp = Dispatcher()
-
     dp.message.register(start, CommandStart())
+    dp.message.register(success_payment, F.successful_payment)
     dp.message.register(some_message)
 
     dp.pre_checkout_query.register(pre_checkout_query)
-    dp.message.register(sucess_payment, F.successful_payment)
-
     await dp.start_polling(BOT, skip_updates=False)
 
 
