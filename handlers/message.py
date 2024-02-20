@@ -25,7 +25,7 @@ async def some_message(message: Message):
     await BOT.send_invoice(
         chat_id=user.id,
         title=product_name,
-        description="В дополнительный форме в графе имя указать никнейм на сервере",
+        description="В дополнительной форме в поле имя указать никнейм на сервере",
         payload=product_name,
         provider_token=config.YOOKASSA_KEY,
         currency="RUB",
