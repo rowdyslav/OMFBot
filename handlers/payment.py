@@ -5,10 +5,9 @@ from mcrcon import MCRcon
 import config
 from core import BOT
 
-
-async def pre_checkout_query(pre_checkout_query: PreCheckoutQuery):
-    ic("pre_checkout_query")
-    await BOT.answer_pre_checkout_query(pre_checkout_query.id, ok=True)
+# async def pre_checkout_query(pre_checkout_query: PreCheckoutQuery):
+#     ic("pre_checkout_query")
+#     await BOT.answer_pre_checkout_query(pre_checkout_query.id, ok=True)
 
 
 async def success_payment(message: Message):
