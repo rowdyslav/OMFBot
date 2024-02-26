@@ -1,14 +1,14 @@
-from aiogram import Bot, F
 from aiogram.types import Message, PreCheckoutQuery
 from icecream import ic
 from mcrcon import MCRcon
 
 import config
+from core import BOT
 
 
-async def pre_checkout_query(pre_checkout_query: PreCheckoutQuery, bot: Bot):
+async def pre_checkout_query(pre_checkout_query: PreCheckoutQuery):
     ic("pre_checkout_query")
-    await bot.answer_pre_checkout_query(pre_checkout_query.id, ok=True)
+    await BOT.answer_pre_checkout_query(pre_checkout_query.id, ok=True)
 
 
 async def success_payment(message: Message):
